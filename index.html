@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="bg"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI Ambassador Interns · Yettel</title>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f1f5f8;--panel:#fff;--line:#e1e8ee;--text:#00233F;--soft:#3f5a72;--lime:#B4FF00;--accent:#00233F}
+@media (prefers-color-scheme:dark){:root:not([data-theme=light]){--bg:#00233F;--panel:#06304f;--line:rgba(255,255,255,.12);--text:#fff;--soft:#b9c9d8;--accent:#B4FF00}}
+:root[data-theme=dark]{--bg:#00233F;--panel:#06304f;--line:rgba(255,255,255,.12);--text:#fff;--soft:#b9c9d8;--accent:#B4FF00}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Manrope,system-ui,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;padding:40px max(16px,4vw)}
+.wrap{max-width:1000px;margin:0 auto}
+.top{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;flex-wrap:wrap}
+.eyebrow{font-size:12px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--accent)}
+h1{font-size:30px;font-weight:800;margin-top:6px}
+p.sub{color:var(--soft);margin-top:6px}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:999px;padding:3px;background:var(--panel)}
+.seg button{font:inherit;border:0;background:none;color:var(--soft);padding:6px 12px;border-radius:999px;font-weight:700;cursor:pointer}
+.seg button[aria-pressed=true]{background:#B4FF00;color:#00233F}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px;margin-top:28px}
+a.card{display:flex;align-items:center;gap:14px;padding:14px;border-radius:16px;background:var(--panel);border:1px solid var(--line);
+  color:inherit;text-decoration:none;transition:transform .15s,border-color .15s}
+a.card:hover{transform:translateY(-2px);border-color:#B4FF00}
+.av{width:48px;height:48px;border-radius:50%;background:#B4FF00;color:#00233F;display:grid;place-items:center;font-weight:800;flex:none}
+.n{font-weight:800;font-size:16px}.d{color:var(--soft);font-size:13px;margin-top:2px}
+.ar{margin-left:auto;color:var(--soft)}
+</style></head><body><div class="wrap">
+<div class="top"><div><div class="eyebrow">Yettel · AI Ambassador Intern Program</div><h1 id="t"></h1><p class="sub" id="s"></p></div>
+<div class="seg"><button data-l="bg">БГ</button><button data-l="en">EN</button></div></div>
+<div class="grid" id="g"></div></div>
+<script>
+const D=[{"bg": "Никола Драгнев", "en": "Nikola Dragnev", "f": "Nikola_Dragnev", "dbg": "Технологии", "den": "Technology"}, {"bg": "Павел Шияков", "en": "Pavel Shiyakov", "f": "Pavel_Shiyakov", "dbg": "Технологии", "den": "Technology"}, {"bg": "Владислава Сухачова", "en": "Vladislava Suhachova", "f": "Vladislava_Suhachova", "dbg": "AI екип", "den": "AI Team"}, {"bg": "Галена Севриева", "en": "Galena Sevrieva", "f": "Galena_Sevrieva", "dbg": "AI екип", "den": "AI Team"}, {"bg": "Ив-Кристиян Недков", "en": "Iv-Kristiyan Nedkov", "f": "Iv-Kristiyan_Nedkov", "dbg": "Корпоративни въпроси", "den": "Corporate Affairs"}, {"bg": "Иван Младенов", "en": "Ivan Mladenov", "f": "Ivan_Mladenov", "dbg": "Човешки ресурси", "den": "HR"}, {"bg": "Атанас Проданов", "en": "Atanas Prodanov", "f": "Atanas_Prodanov", "dbg": "Търговски отдел", "den": "Commercial"}, {"bg": "Димитър Иванов", "en": "Dimitar Ivanov", "f": "Dimitar_Ivanov", "dbg": "Търговски отдел", "den": "Commercial"}, {"bg": "Пресияна Дончева", "en": "Presiyana Doncheva", "f": "Presiyana_Doncheva", "dbg": "Финанси", "den": "Finance"}, {"bg": "Михаил Петров", "en": "Mihail Petrov", "f": "Mihail_Petrov", "dbg": "Финанси", "den": "Finance"}];
+const T={bg:{t:"Карти за подкрепа на стажантите",s:"Избери своето име, за да отвориш картата си.",p:"AI стажант · "},en:{t:"Intern support maps",s:"Choose your name to open your map.",p:"AI Trainee · "}};
+const st={get(k){try{return localStorage.getItem(k)}catch(e){return null}},set(k,v){try{localStorage.setItem(k,v)}catch(e){}}};
+const th=st.get('map-theme');if(th)document.documentElement.dataset.theme=th;
+let L=st.get('map-lang')||'bg';
+const esc=s=>s.replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+function ini(n){const p=n.replace('-',' ').split(/\s+/);return (p[0][0]+p[p.length-1][0]).toUpperCase();}
+function r(){document.documentElement.lang=L;document.getElementById('t').textContent=T[L].t;document.getElementById('s').textContent=T[L].s;
+ document.querySelectorAll('[data-l]').forEach(b=>b.setAttribute('aria-pressed',b.dataset.l===L));
+ document.getElementById('g').innerHTML=D.map(x=>`<a class="card" href="${x.f}.html"><span class="av">${ini(x[L])}</span><span><div class="n">${esc(x[L])}</div><div class="d">${T[L].p}${esc(L==='bg'?x.dbg:x.den)}</div></span><span class="ar">→</span></a>`).join('');}
+document.addEventListener('click',e=>{const b=e.target.closest('[data-l]');if(b){L=b.dataset.l;st.set('map-lang',L);r();}});
+r();
+</script></body></html>
